@@ -46,14 +46,14 @@ const CEOSays = ({ data, index }) => {
             right: "-5%",
             width: "280px",
             height: "280px",
-           
+
           },
           "&::after": {
             bottom: "-5%",
             left: "-5%",
             width: "180px",
             height: "180px",
-           
+
           }
         }}
       >
@@ -94,17 +94,22 @@ const CEOSays = ({ data, index }) => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            sx={{
-              fontSize: { md: "1rem", xs: "0.9rem" },
-              lineHeight: 1.6,
-              color: theme.palette.text.secondary,
-              mb: "1.2rem",
-              "& p": { marginBottom: "1rem" },
-              "& strong": { color: "#0486ff", fontWeight: 600 },
-            }}
           >
-            <div dangerouslySetInnerHTML={{ __html: data.description }} />
+            <Typography
+              variant="h3"
+              sx={{
+               
+                lineHeight: 1.7,
+                color: theme.palette.text.secondary,
+                mb: "1.2rem",
+                "& p": { marginBottom: "1rem" },
+                "& strong": { color: "#0486ff", fontWeight: 600 },
+              }}
+            >
+              <div dangerouslySetInnerHTML={{ __html: data.description }} />
+            </Typography>
           </motion.div>
+
 
           {data?.ctaText && data?.ctaLnik && (
             <motion.div
@@ -129,7 +134,7 @@ const CEOSays = ({ data, index }) => {
                       fontSize: "0.9rem",
                       borderRadius: "10px",
                       boxShadow: "0 4px 16px rgba(4, 134, 255, 0.25)",
-        
+
                       color: "#fff",
                       "&:hover": {
                         boxShadow: "0 6px 22px rgba(4, 134, 255, 0.35)",
@@ -178,14 +183,14 @@ const CEOSays = ({ data, index }) => {
                 alignItems: "center",
                 position: "relative",
                 backdropFilter: "blur(10px)",
-             
+
               }}
             >
               <ProfileCard
                 avatarUrl={data?.image ? `${imgLink}${data.image}` : "/assets/noimg.webp"}
                 enableTilt={true}
                 enableMobileTilt={false}
-               
+
               />
             </Box>
           </motion.div>
