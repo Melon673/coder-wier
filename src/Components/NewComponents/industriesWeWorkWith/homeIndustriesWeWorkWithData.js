@@ -1,0 +1,23 @@
+export const homeIndustriesWeWorkWithData ={
+    heading: <>We Have Successfully Provide<span style={{color:" #32D460"}}> Cutting-edge Solutions</span> To These Industries:</>,
+    description: "CodersWire caters to multiple sectors, delivering bespoke solutions for diverse industries across the globe with its extensive expertise.",
+    textbg:"/Assets/Images/NewCompoents/Home/industries/textbg.png",
+    textbghover:"/Assets/Images/NewCompoents/Home/industries/textbghover.png",
+    imgbg:"/Assets/Images/NewCompoents/Home/industries/imgimage.png",
+    imgbghover:"/Assets/Images/NewCompoents/Home/industries/imgimagehover.png",
+    textbgformobile:"/Assets/Images/NewCompoents/Home/industries/textbgformobile.png",
+    textbghoverformobile:"/Assets/Images/NewCompoents/Home/industries/textbghover.png",
+    imgbgformobile:"/Assets/Images/NewCompoents/Home/industries/imgimageformobile.png",
+    imgbghoverformobile:"/Assets/Images/NewCompoents/Home/industries/imgimagehoverformobile.png",
+    detail: [
+       {title: "Health Care",img:"health"},
+       {title: "Construction",img:"construction"},
+       {title: "E Commerce and Retails",img:"ecommerece"},
+       {title: "Logistic And Transportation",img:"logistics and transport"},
+       {title: "Banking",img:"banking"},
+       {title: "Oil And Gas",img:"oil and gas"},
+       {title: "Insurance",img:"insurance"},
+       {title: "Finance",img:"finance"},
+       {title: "Telecommunication",img:"telecommunication"},
+    ],
+}

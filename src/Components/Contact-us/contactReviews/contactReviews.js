@@ -1,0 +1,5 @@
+export const reviewContactData = {
+    heading : "Review",
+    description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do incididunt.',
+    images: ['https://firebasestorage.googleapis.com/v0/b/coders-wire.appspot.com/o/reviewHome%2FThe%20Manifest.webp?alt=media&token=39b4d33d-7757-48a7-9dae-ff76254ef315', 'https://firebasestorage.googleapis.com/v0/b/coders-wire.appspot.com/o/reviewHome%2FClutch%20Black.webp?alt=media&token=b7de0c1b-5aa0-46fe-9e53-0d2440485b64', 'https://firebasestorage.googleapis.com/v0/b/coders-wire.appspot.com/o/reviewHome%2FThe%20Clutch%20Blue.webp?alt=media&token=9a804a8d-3d7d-4a34-9c38-4dfc02ffe688', 'https://firebasestorage.googleapis.com/v0/b/coders-wire.appspot.com/o/reviewHome%2FGood%20Firms.webp?alt=media&token=3de2c3dd-03c9-420f-a83b-8239f30b5ed9']
+}

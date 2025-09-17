@@ -1,0 +1,556 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --color-white: #FFFDFD;
+  --color-black: #000000;
+  --color-dark-grey: #3F3C39;
+  --color-blue: #0486ff;
+  --color-dark-blue: #0F256E;
+  --color-green: #009951;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: var(--font-inter), sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeSpeed;
+}
+h1 {
+  font-size: 2.4vw;
+  font-weight: 600;
+  color: #3F3C39;
+}
+
+h2 {
+  font-size: 2vw;
+  font-weight: 600;
+  color: #3F3C39;
+}
+
+h3 {
+  font-size: 1.5vw;
+  font-weight: 600;
+  color: #3F3C39;
+}
+
+h4 {
+  font-size: 1.05vw;
+  color: #3F3C39;
+}
+
+h5 {
+  font-size: 0.94vw;
+  color: #3F3C39;
+}
+
+h6 {
+  font-size: 0.73vw;
+  color: #3F3C39;
+}
+
+/* Paragraph */
+p {
+  font-size: 0.84vw;
+  color: #3F3C39;
+  margin: 0 0 1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  h1 {
+    font-size: 2.4rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  h4 {
+    font-size: 1.05rem;
+  }
+
+  h5 {
+    font-size: 0.94rem;
+  }
+
+  h6 {
+    font-size: 0.73rem;
+  }
+
+  p {
+    font-size: 0.84rem;
+  }
+  
+}
+.BankingKey p,
+.OurOutSourceBlackish p,
+.OurOutSourceBlackish li,
+.OurOutSourceBlackish span,
+.OurOutSourceBlackish strong {
+  color: #fff !important;
+}
+.contact-button,
+.contact-button-white{
+  position: relative;
+  padding: 0.6vw 0.8vw;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+  background-color: #0486ff;
+  color: white;
+  border-radius: 0.54vw;
+  display: inline-flex;
+  align-items: center;border: 2px solid #0486ff;
+  font-size: 0.84vw;
+  
+}
+.contact-button-white{
+  background-color: #fff;
+  color: black;
+border: 2px solid #fff;
+}
+.contact-label {
+  position: relative;
+  z-index: 10;
+  white-space: nowrap;
+  
+  transition: color 0.3s ease-in-out;
+}
+.hover-bg,
+.hover-bg-white {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  background-color: white;
+    width: 2vw;
+  border-radius: 0.54vw 0  0 0.54vw;
+  z-index: 0;
+  transition: width 0.3s ease-in-out;
+}
+.hover-bg-white{
+  background-color: #0486ff;
+
+}
+.icon-wrapper {
+  position: relative;
+  display: flex;
+  width: 24px;
+  height: 1.2vw;
+  overflow: hidden;
+  margin-left: 8px;
+  z-index: 10;
+}
+.icon-items {
+  position: absolute;
+  display: flex;right: -6px;
+  top: 15%;
+  transition: transform 0.3s ease-in-out;
+}
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+}
+.contact-button .svg-icon {
+  width: 16px;
+  height: 16px;
+  stroke: black;
+}
+.contact-button-white .svg-icon{
+  color: #fff;
+    width: 16px;
+  height: 16px;
+}
+.contact-button:hover .hover-bg,
+.contact-button-white:hover .hover-bg-white {
+  width: 100% !important;border-radius: 0;
+}
+
+.contact-button:hover .contact-label{
+  color: #000;
+}
+.contact-button-white:hover .contact-label{
+  color: #fff;
+
+}
+.contact-button:hover .icon-items,
+.contact-button-white:hover .icon-items {
+  transform: translateX(48px);
+}
+.blueColor{
+  color: var(--color-blue) !important;
+}
+.whiteColor{
+  color: var(--color-white) !important;
+}
+.greyColor{
+  color: var(--color-dark-grey) !important;
+}
+.blackColor{
+  color: var(--color-black) !important;
+}
+.greenColor{
+  color: var(--color-green ) !important;
+}
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #202d3b;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-blue);
+}
+.leaflet-control-container .leaflet-control-logo {
+  display: none !important;
+}
+
+.leaflet-control-container .leaflet-control-attribution {
+  display: none !important;
+}
+.customSwiper .swiper-wrapper {
+  align-items: stretch !important;
+
+}
+  .SolutionProvide li,
+  .flexible li,
+  .Ceo li,
+  .CeoSays li,
+  .coreservice li,
+  .whomweserve li,
+  .OurOutSourceBlackish li,
+  .ExpertQAServicesTestingHover li,
+  .OutsourceServiceOverview1 li,
+  .SolutionsWeDeliverCSR li,
+  .pricingModal li{
+  margin-left: 4% !important;
+  }
+  .emergingInnovation ul,
+  .Searchpage ul{
+    margin-left: 2% !important;
+  }
+  .emergingInnovation ul li{
+     margin-bottom: 1vw !important;
+  }
+  .emergingInnovation p  {
+    margin-bottom: 1vw !important;
+    margin-top: 1vw !important;
+  }
+  .navbar {
+    background: var(--color-white) !important;
+    backdrop-filter: blur(20px) !important;
+    box-shadow: none !important;
+    justify-content: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .headertop {
+    border-top: 0.35rem var(--color-blue) solid;
+  }
+  .ContactPage input,
+  .ContactPage textarea,
+   .ContactPage select{
+    width: 100% !important;
+    outline: none !important;font-family: sans-serif !important;
+    border-radius: 0.45vw !important;
+    background-color: #fff !important;
+    border: 1px solid #e0e0e0;  resize: none;
+  }
+  .customTextarea{
+    min-height: 10vw !important;
+  }
+  .customInputSmall,
+  .customTextarea {
+  padding: 2% !important;
+}
+
+.customInputLarge {
+  padding: 4% !important;
+}
+  .ContactPage input:focus{
+    border: 1px solid #0486ff;
+
+  }
+  li{
+    margin-top: 0.2vw !important;
+    margin-bottom: 0.2vw !important;
+  }
+  @media (min-width:0px) and (max-width: 900px) {  
+  
+    .ExpertQAServicesTestingHover li{
+      height: 2.8rem !important;
+      margin-left: 4% !important;
+      }
+      .icon-wrapper {
+  width: 24px;
+  height: 24px;
+}
+        .ContactPage input,
+  .ContactPage textarea,
+   .ContactPage select{
+    border-radius: 0.45rem !important;
+  }
+  .customTextarea{
+    min-height: 8rem !important;
+  }
+ 
+  .customInputSmall,
+  .customTextarea {
+  padding: 1rem !important;
+}
+
+.customInputLarge {
+  padding: 0.5rem !important;
+}
+.contact-button,
+.contact-button-white{
+  padding: 0.4rem 0.84rem;
+  border-radius: 0.544rem;
+  font-size: 0.844rem;
+  
+}
+.hover-bg,
+.hover-bg-white {
+    width: 2rem;
+  border-radius: 0.54rem 0  0 0.54rem;
+}
+
+  }
+     .SolutionProvide li,
+  .flexible li,
+  .Ceo li,
+  .CeoSays li,
+  .coreservice li,
+  .whomweserve li,
+  .OurOutSourceBlackish li,
+  .ExpertQAServicesTestingHover li,
+  .OutsourceServiceOverview1 li,
+  .SolutionsWeDeliverCSR li,
+  .pricingModal li,
+  .blog li{
+  margin-left: 1.4rem !important;
+  }
+    .emergingInnovation li{
+      margin-left: 0.6rem !important;
+  
+    }
+  .search-input {
+    outline: none;width: 15vw;border: 4px solid #0486ff;
+    font-size: 1vw;padding: 2% 4% !important;border-radius: 0 0 0.45vw 0.45vw !important;height: 2.5vw;
+    color: #333;background-color: white;
+  }
+  .Search-page {
+  all: unset;
+  width: 100%;
+  font-size: 1vw;
+  color: inherit;
+  box-sizing: border-box;
+}
+.Search-page::placeholder{
+  font-size: 0.8vw;
+}
+  .search-input::placeholder{
+     font-size: 0.8vw
+  }
+  .inputplaceholderNewsletters::placeholder{
+   color: #666666 !important;
+   font-size: 0.8vw !important;
+  }
+  button:hover .circle {
+    width: 100%;
+  }
+.registration input,
+.registration textarea {
+  outline: none;
+  border: none;
+  background: #f9f9f9;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  border: 1px solid #f9f9f9;
+  border-radius: 0.3vw;
+  padding:1vw 0.6vw;
+  font-size: 0.8vw;
+  color: #6a6a6c;
+  resize: none;
+}
+.registration input:focus,
+.registration textarea:focus {
+  border: 1px solid #0486ff;
+}
+  .registration input::placeholder,
+  .registration textarea::placeholder{
+    font-weight: 400 !important;
+    font-family:sans-serif;
+  }
+  .registration textarea{
+    height: 6vw;
+  }
+  .inputplaceholderNewsletter::placeholder{
+    color: white !important;
+    font-size: 1vw !important;
+  }
+  .hover-icon {
+    width: 3vh !important;
+    height: 3vh !important;
+    line-height: 50px !important;
+    text-align: center !important;
+    border: 0.15vw solid #dddddd !important;
+    border-radius: 50% !important;
+    position: relative !important;
+    transition: all 0.25s !important;
+    text-decoration: none !important;
+  }
+  
+  .hover-icon svg {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+  .hover-icon:before,
+  .hover-icon:after {
+    position: absolute !important;
+    content: "" !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform-origin: 50% 50% !important;
+    transform: scale(0) !important;
+    border-radius: 50% !important;
+    z-index: -1 !important;
+    transition: all 0.25s !important;
+  }
+  .hover-icon:hover svg path {
+    fill: white !important;
+  }
+  .hover-icon:hover:before {
+    background: var(--hover-bg-color) !important;
+    transform: scale(1.5) !important;
+  }
+  .maincontainer>.front,
+  .maincontainer>.back {
+    position: absolute;
+    background: #F4FAFF;
+    box-shadow:  inset 0px 30px 60px -12px rgba(244, 250, 255, 0.25),inset 0px 18px 36px -18px rgba(244, 250, 255, 0.30);
+    width: 31rem;
+    height: 28rem;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    transition: transform 0.5s linear 0s;
+  }
+  .maincontainer>.front {
+    transform: perspective(600px) rotateY(0deg);
+  }
+  
+  .maincontainer>.back {
+    transform: perspective(600px) rotateY(180deg);
+  }
+  
+  .maincontainer:hover>.front {
+    transform: perspective(600px) rotateY(-180deg);
+  }
+  
+  .maincontainer:hover>.back {
+    transform: perspective(600px) rotateY(0deg);
+  }
+
+  @media (max-width: 900px) {
+    .hover-icon {
+      border: 0.14rem solid #bbbbbb !important;
+    }
+    .registration textarea{
+      height: 6rem;
+    }
+      .Search-page {
+  font-size: 1rem;
+}
+   .search-input {
+    outline: none;width: 100% !important;
+    font-size: 1rem;border-radius: 0 0 0.45rem 0.45rem !important;height: 2.5rem;
+    color: #333;background-color: white;
+  }
+   .search-input::placeholder{
+     font-size: 0.8rem
+
+   }
+.Search-page::placeholder{
+  font-size: 0.8rem;
+}
+    .iconcolor{
+      color: #fff !important;
+          background-color: #0486ff!important;
+    border-radius: 0.3rem!important;
+         font-size: 1.8rem !important;
+         cursor: pointer!important;
+    } 
+     .all_project_links_active,
+    .all_project_links_activeexperts {
+   margin-bottom: 0rem !important;
+   background-color: #0486ff !important;
+   font-size: 0.8rem !important;
+   color: white !important;
+  }
+  .all_project_links,
+  .all_project_linksexperts {
+   opacity: 1 !important;
+   margin-bottom: 0rem !important;
+   font-size: 0.8rem !important;
+   color: black !important;
+  }
+  .all_project_links_activeexperts {
+   background-color: #0486ff !important;
+  }
+  .inputplaceholderNewsletter::placeholder,
+  .inputplaceholderNewsletters::placeholder{
+   font-size: 0.8rem !important;
+  }
+  .m_port_dropdown,
+  .m_port_dropdownWhite,
+  .m_port_dropdownExperts {
+   color: black !important;
+   background-color: transparent !important;
+   border: 3px solid #0486ff !important;
+   padding: 0.3rem 1rem !important;
+   border-radius:8px 8px 0  0  !important;
+  }
+  .m_port_dropdownWhite{
+   color: white !important;
+
+  }
+  .m_port_dropdown::after,
+  .m_port_dropdownExperts::after {
+   border-bottom: none !important;
+  }
+  .m_port_dropdown:focus,
+  .m_port_dropdownExperts:focus {
+   background-color: transparent !important;
+   border-bottom: none !important;
+  }
+  .m_port_dropdown::before,
+  .m_port_dropdownExperts::before {
+   border-bottom: none !important;
+   background-color: transparent !important;
+  }
+  .m_port_dropdownExperts {
+   color: #0486ff !important ;
+   border: 3px solid #121E2A !important;
+  }
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  p{
+    line-height: 150% !important;
+  }
