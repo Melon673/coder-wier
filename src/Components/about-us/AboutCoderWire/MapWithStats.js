@@ -37,165 +37,150 @@ const WorldGlobeWithStats = () => {
   const globeRef = useRef();
   const containerRef = useRef();
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
-  const timeoutRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 1200, height: 600 });
   const [isGlobeReady, setIsGlobeReady] = useState(false);
 
-  // Handle window resize to make globe responsive
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isUserInteracting, setIsUserInteracting] = useState(false);
+
+  const interactionTimeoutRef = useRef(null);
+  const cycleIntervalRef = useRef(null);
+
+  // Resize handler
   useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
-        const { width } = containerRef.current.getBoundingClientRect();
-        // Calculate height based on aspect ratio
-        const height = Math.max(width * 0.6, 400);
+        const { width, height } = containerRef.current.getBoundingClientRect();
         setDimensions({ width, height });
       }
     };
-
-    // Initial size calculation
     handleResize();
-
-    // Add event listener for window resize
     window.addEventListener("resize", handleResize);
-    
-    // Cleanup
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Disable zoom but keep rotation enabled
+  // Configure controls
   useEffect(() => {
     if (globeRef.current && isGlobeReady) {
-      const globe = globeRef.current;
-      globe.controls().enableZoom = false;
-      globe.controls().enablePan = false;
-      
-      // Additional prevention for touch zoom
-      const canvas = globe.renderer().domElement;
-      const preventZoom = (e) => {
-        if (e.touches && e.touches.length > 1) {
-          e.preventDefault();
-        }
+      const controls = globeRef.current.controls();
+      controls.enableZoom = false;
+      controls.enablePan = false;
+
+      const startInteraction = () => {
+        setIsUserInteracting(true);
+        if (interactionTimeoutRef.current)
+          clearTimeout(interactionTimeoutRef.current);
+        interactionTimeoutRef.current = setTimeout(
+          () => setIsUserInteracting(false),
+          5000
+        );
       };
-      
-      canvas.addEventListener('touchstart', preventZoom, { passive: false });
-      canvas.addEventListener('touchmove', preventZoom, { passive: false });
-      
-      return () => {
-        canvas.removeEventListener('touchstart', preventZoom);
-        canvas.removeEventListener('touchmove', preventZoom);
-      };
+
+      controls.addEventListener("start", startInteraction);
+      return () => controls.removeEventListener("start", startInteraction);
     }
   }, [isGlobeReady]);
 
-  const handleLabelClick = (marker) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
+  // Auto-cycle locations
+  useEffect(() => {
+    if (!isGlobeReady) return;
 
-    if (globeRef.current) {
+    cycleIntervalRef.current = setInterval(() => {
+      if (isUserInteracting || !globeRef.current) return;
+
+      const nextIndex = (currentIndex + 1) % LOCATIONS.length;
+      setCurrentIndex(nextIndex);
+
+      const loc = LOCATIONS[nextIndex];
       globeRef.current.pointOfView(
-        { lat: marker.coords[0], lng: marker.coords[1], altitude: 1.2 },
-        1500
+        { lat: loc.coords[0], lng: loc.coords[1], altitude: 1.5 },
+        2500
       );
-      setSelectedLocation(marker);
+      setSelectedLocation(loc);
+    }, 3000);
 
-      timeoutRef.current = setTimeout(() => {
-        globeRef.current.pointOfView({ lat: 0, lng: 0, altitude: 2.5 }, 1500);
-        setSelectedLocation(null);
-      }, 5000);
-    }
-  };
+    return () => clearInterval(cycleIntervalRef.current);
+  }, [isGlobeReady, currentIndex, isUserInteracting]);
 
-  // Default images if custom ones aren't available
-  const earthImage = "/globe/earth-blue-marble.jpg" || "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg";
-  const backgroundImage = "/globe/night-sky.png" || "//unpkg.com/three-globe/example/img/night-sky.png";
+  const earthImage = "/globe/earth-blue-marble.jpg";
+  const backgroundImage = "/globe/night-sky.png";
 
   return (
-    <div 
-      ref={containerRef} 
-      className="globe-container"
-      style={{ 
-        width: "100%", // Full width
-        height: `550px`,
+    <div
+      ref={containerRef}
+      style={{
+        width: "100%",
+        height: "600px", // ✅ fixed height to ensure visibility
         position: "relative",
         overflow: "hidden",
         background: "linear-gradient(0deg, #0a192f 0%, #1a365d 100%)",
+        borderRadius: "12px",
       }}
     >
-      <div style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-      }}>
-        <Globe
-          ref={globeRef}
-          width={dimensions.width}
-          height={dimensions.height}
-          globeImageUrl={earthImage}
-          backgroundImageUrl={backgroundImage}
-          onGlobeReady={() => {
-            setIsGlobeReady(true);
-            if (globeRef.current) {
-              globeRef.current.controls().enableZoom = false;
-              globeRef.current.controls().enablePan = false;
-              globeRef.current.pointOfView({ lat: 0, lng: 0, altitude: 2.5 }, 0);
-            }
-          }}
-          labelsData={LOCATIONS}
-          labelLat={(d) => d.coords[0]}
-          labelLng={(d) => d.coords[1]}
-          labelText={(d) => d.name}
-          labelSize={2.5}
-          labelDotRadius={1.5}
-          labelColor={() => "#ffffff"}
-          labelResolution={2}
-          labelDotOrientation={() => "right"}
-          labelLabel={({ name, address }) => `
-            <div style="
-              background: rgba(15, 40, 110, 0.85);
-              color: #FFFDFD;
-              padding: 8px 12px;
-              border-radius: 8px;
-              font-size: 14px;
-              backdrop-filter: blur(5px);
-              border: 1px solid rgba(255, 255, 255, 0.2);
-            ">
-              <strong>${name}</strong><br/>
-              <span style="font-size: 12px;">${address}</span>
-            </div>
-          `}
-          onLabelClick={handleLabelClick}
-        />
-      </div>
+      <Globe
+        ref={globeRef}
+        width={dimensions.width}
+        height={dimensions.height}
+        globeImageUrl={earthImage}
+        backgroundImageUrl={backgroundImage}
+        showAtmosphere
+        atmosphereColor="lightskyblue"
+        atmosphereAltitude={0.25}
+        onGlobeReady={() => {
+          setIsGlobeReady(true);
+          globeRef.current.pointOfView({ lat: 0, lng: 0, altitude: 1.5 }, 0);
+        }}
+        onLabelClick={(d) => {
+          globeRef.current.pointOfView(
+            { lat: d.coords[0], lng: d.coords[1], altitude: 1.5 },
+            2000
+          );
+          setSelectedLocation(d);
+        }}
+        labelsData={LOCATIONS}
+        labelLat={(d) => d.coords[0]}
+        labelLng={(d) => d.coords[1]}
+        labelText={(d) => d.name}
+        labelSize={2.7}
+        labelDotRadius={1.6}
+        labelColor={() => "#ffffff"}
+        labelDotOrientation={() => "right"}
+        labelResolution={3}
+        labelLabel={({ name, address }) => `
+          <div style="
+            background: rgba(15, 40, 110, 0.85);
+            color: #FFFDFD;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+          ">
+            <strong>${name}</strong><br/>
+            <span style="font-size: 12px;">${address}</span>
+          </div>
+        `}
+      />
 
       {selectedLocation && (
         <div
-          className="location-info"
           style={{
             position: "absolute",
             bottom: "20px",
             left: "20px",
             padding: "20px",
-            borderRadius: "12px",
+            borderRadius: "14px",
             maxWidth: "320px",
-            zIndex: 1000,
+            zIndex: 10,
             fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
             background: "rgba(255, 255, 255, 0.15)",
-            backdropFilter: "blur(10px)",
-            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
+            backdropFilter: "blur(14px)",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.35)",
+            border: "1px solid rgba(255, 255, 255, 0.25)",
           }}
         >
-          <h3 style={{ margin: 0, fontSize: "18px", color: "#e63946" }}>
+          <h3 style={{ margin: 0, fontSize: "18px", color: "#ffdd57" }}>
             {selectedLocation.name}
           </h3>
           <p style={{ margin: 0, fontSize: "14px", color: "white" }}>
@@ -203,37 +188,6 @@ const WorldGlobeWithStats = () => {
           </p>
         </div>
       )}
-
-      <style jsx>{`
-        .globe-container {
-          width: 100%;
-          position: relative;
-        }
-        
-        @media (max-width: 768px) {
-          .location-info {
-            left: 10px !important;
-            bottom: 10px !important;
-            padding: 15px !important;
-            max-width: 280px !important;
-          }
-        }
-        
-        @media (max-width: 480px) {
-          .location-info {
-            max-width: 220px !important;
-            padding: 12px !important;
-          }
-          
-          .location-info h3 {
-            font-size: 16px !important;
-          }
-          
-          .location-info p {
-            font-size: 12px !important;
-          }
-        }
-      `}</style>
     </div>
   );
 };
