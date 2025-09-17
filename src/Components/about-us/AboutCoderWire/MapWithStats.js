@@ -39,14 +39,15 @@ const WorldGlobeWithStats = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
   const timeoutRef = useRef(null);
+  const [isGlobeReady, setIsGlobeReady] = useState(false);
 
   // Handle window resize to make globe responsive
   useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
         const { width } = containerRef.current.getBoundingClientRect();
-        // Calculate height based on aspect ratio but ensure it's tall enough
-        const height = Math.max(width * 0.7, 400);
+        // Calculate height based on aspect ratio
+        const height = Math.max(width * 0.6, 400);
         setDimensions({ width, height });
       }
     };
@@ -63,6 +64,31 @@ const WorldGlobeWithStats = () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
+
+  // Disable zoom but keep rotation enabled
+  useEffect(() => {
+    if (globeRef.current && isGlobeReady) {
+      const globe = globeRef.current;
+      globe.controls().enableZoom = false;
+      globe.controls().enablePan = false;
+      
+      // Additional prevention for touch zoom
+      const canvas = globe.renderer().domElement;
+      const preventZoom = (e) => {
+        if (e.touches && e.touches.length > 1) {
+          e.preventDefault();
+        }
+      };
+      
+      canvas.addEventListener('touchstart', preventZoom, { passive: false });
+      canvas.addEventListener('touchmove', preventZoom, { passive: false });
+      
+      return () => {
+        canvas.removeEventListener('touchstart', preventZoom);
+        canvas.removeEventListener('touchmove', preventZoom);
+      };
+    }
+  }, [isGlobeReady]);
 
   const handleLabelClick = (marker) => {
     if (timeoutRef.current) {
@@ -84,16 +110,20 @@ const WorldGlobeWithStats = () => {
     }
   };
 
+  // Default images if custom ones aren't available
+  const earthImage = "/globe/earth-blue-marble.jpg" || "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg";
+  const backgroundImage = "/globe/night-sky.png" || "//unpkg.com/three-globe/example/img/night-sky.png";
+
   return (
     <div 
       ref={containerRef} 
       className="globe-container"
       style={{ 
-        width: "100%", 
-        height: `${dimensions.height}px`,
+        width: "100%", // Full width
+        height: `550px`,
         position: "relative",
         overflow: "hidden",
-        background: "linear-gradient(0deg, #0a192f 0%, #1a365d 100%)"
+        background: "linear-gradient(0deg, #0a192f 0%, #1a365d 100%)",
       }}
     >
       <div style={{
@@ -110,11 +140,13 @@ const WorldGlobeWithStats = () => {
           ref={globeRef}
           width={dimensions.width}
           height={dimensions.height}
-          globeImageUrl="/globe/earth-blue-marble.jpg"
-          backgroundImageUrl="/globe/night-sky.png"
+          globeImageUrl={earthImage}
+          backgroundImageUrl={backgroundImage}
           onGlobeReady={() => {
+            setIsGlobeReady(true);
             if (globeRef.current) {
               globeRef.current.controls().enableZoom = false;
+              globeRef.current.controls().enablePan = false;
               globeRef.current.pointOfView({ lat: 0, lng: 0, altitude: 2.5 }, 0);
             }
           }}
